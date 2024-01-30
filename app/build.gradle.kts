@@ -14,17 +14,12 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        //API de Marvel
-        buildConfigField("String", "MARVEL_API_KEY", "\"a5b5f91bb47f9138a962161a7c70d532db2217fa\"")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
-
-        buildFeatures {
-            buildConfig = true
-        }
+        
     }
 
     buildTypes {

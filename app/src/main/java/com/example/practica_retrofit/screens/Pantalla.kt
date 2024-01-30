@@ -9,10 +9,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.foundation.lazy.items
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import com.example.practica_retrofit.BuildConfig
-import com.example.practica_retrofit.data.MarvelApiService
+import com.example.practica_retrofit.data.ApiService
+import com.example.practica_retrofit.data.User
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -26,29 +25,27 @@ fun PantallaInicial(){
 }
 
 
-
 @Composable
 fun UserList() {
+    val apiService: ApiService
+
     val retrofit = Retrofit.Builder()
-        .baseUrl("https://gateway.marvel.com/")
+        .baseUrl("https://api.example.com/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    val marvelApiService: MarvelApiService = retrofit.create(MarvelApiService::class.java)
+    apiService = retrofit.create(ApiService::class.java)
 
-    val characters = remember { mutableStateOf(listOf<com.example.practica_retrofit.data.Character>()) }
-    val coroutineScope = rememberCoroutineScope()
+    val users = remember { mutableStateOf(listOf<User>()) }
 
-    LaunchedEffect(coroutineScope) {
-        val response = marvelApiService.getCharacters(BuildConfig.MARVEL_API_KEY)
-        if (response.isSuccessful) {
-            characters.value = response.body()?.data?.results ?: listOf()
-        }
+    LaunchedEffect(Unit) {
+        users.value = apiService.getUsers()
     }
 
     LazyColumn {
-        items(characters.value) { character ->
-            Text(character.name)
+        items(users.value) { user ->
+            Text(user.name)
         }
     }
 }
+
