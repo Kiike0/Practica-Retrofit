@@ -1,5 +1,7 @@
 package com.example.practica_retrofit.screens
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.practica_retrofit.data.RetrofitServiceFactory
@@ -8,6 +10,9 @@ import kotlinx.coroutines.launch
 
 class PantallaViewModel : ViewModel() {
     val service = RetrofitServiceFactory.makeRetrofitService()
+
+    //private val _moviesRemoteResults = MutableLiveData<RemoteResult>()
+    //val moviesRemoteResults: LiveData<RemoteResult> = _moviesRemoteResults
 
     // Variable para almacenar las películas
     var movies: RemoteResult = RemoteResult(0, emptyList(), 0, 0)
@@ -20,6 +25,5 @@ class PantallaViewModel : ViewModel() {
         }
         return movies
     }
-
 
 }

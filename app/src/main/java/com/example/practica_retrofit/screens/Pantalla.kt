@@ -20,8 +20,8 @@ fun MoviesList(
     ) {
 
         LazyColumn {
-            items(viewModel.moviesResult().results) { movie ->
-                Text(text = movie.title)
+            items(viewModel.movies.results) { movie ->
+                Text(text = movie.original_title)
             }
         }
     }

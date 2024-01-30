@@ -6,13 +6,11 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.practica_retrofit.data.RetrofitServiceFactory
 import com.example.practica_retrofit.data.model.RemoteResult
-import com.example.practica_retrofit.data.model.Result
 import com.example.practica_retrofit.screens.MoviesList
 import com.example.practica_retrofit.screens.PantallaViewModel
 import com.example.practica_retrofit.ui.theme.PracticaRetrofitTheme
@@ -25,6 +23,19 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val service = RetrofitServiceFactory.makeRetrofitService()
+
+        // Variable para almacenar las películas
+        var movies: RemoteResult = RemoteResult(0, emptyList(), 0, 0)
+
+        lifecycleScope.launch {
+            val moviesResult = service.listPopularMovies("57911d91de2af702e18c21f53390a0d3", "US")
+            movies = moviesResult
+
+            println(movies)
+        }
+
         setContent {
             PracticaRetrofitTheme {
                 // A surface container using the 'background' color from the theme
@@ -32,7 +43,6 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-
                     MoviesList(viewModel = PantallaViewModel())
                 }
             }
@@ -60,6 +70,30 @@ class MainActivity : ComponentActivity() {
         lifecycleScope.launch {
             val moviesResult = service.listPopularMovies("57911d91de2af702e18c21f53390a0d3", "US")
             movies = moviesResult
+
+            println(movies)
+        }
+ */
+
+/*
+
+        Así tampoco va:
+
+        val service = RetrofitServiceFactory.makeRetrofitService()
+
+        // Variable viewModel inicializada utilizando lazy
+        val viewPtModel: PantallaViewModel by lazy {
+            ViewModelProvider(this)[PantallaViewModel::class.java]
+        }
+
+        // Variable para almacenar las películas
+        var movies: RemoteResult = RemoteResult(0, emptyList(), 0, 0)
+
+        lifecycleScope.launch {
+            val moviesResult = service.listPopularMovies("57911d91de2af702e18c21f53390a0d3", "US")
+            movies = moviesResult
+
+            viewPtModel.movies = movies
 
             println(movies)
         }
