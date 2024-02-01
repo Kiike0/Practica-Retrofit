@@ -27,13 +27,13 @@ class MainActivity : ComponentActivity() {
         val service = RetrofitServiceFactory.makeRetrofitService()
 
         // Variable para almacenar las películas
-        var movies: RemoteResult = RemoteResult(0, emptyList(), 0, 0)
+        //var movies: RemoteResult = RemoteResult(0, emptyList(), 0, 0)
 
         lifecycleScope.launch {
             val moviesResult = service.listPopularMovies("57911d91de2af702e18c21f53390a0d3", "US")
-            movies = moviesResult
+            //movies = moviesResult
 
-            println(movies)
+            println(moviesResult)
         }
 
         setContent {

@@ -21,7 +21,7 @@ fun MoviesList(
 
         LazyColumn {
             items(viewModel.movies.results) { movie ->
-                Text(text = movie.original_title)
+                Text(text = movie.title)
             }
         }
     }
